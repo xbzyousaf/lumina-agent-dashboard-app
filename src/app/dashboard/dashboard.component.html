@@ -18,26 +18,48 @@
               No active tickets found.
             </div>
             <!-- Show table only when tickets are available -->
-            <table class="table table-hover" *ngIf="!loading && tickets.length > 0">
-              <thead class="text-primary">
-                <tr>
-                  <th>ID</th>
-                  <th>Subject</th>
-                  <th>Caller Name</th>
-                  <th>Agent Name</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let ticket of tickets">
-                  <td>{{ ticket.id }}</td>
-                  <td>{{ ticket.subject }}</td>
-                  <td>{{ ticket.caller.first_name }} {{ ticket.caller.last_name }}</td>
-                  <td>{{ ticket.agent?.name || '' }}</td>
-                  <td><button class="btn btn-sm btn-primary"  [routerLink]="['/tickets', ticket.id, 'edit']">Edit</button></td>
-                </tr>
-              </tbody>
-            </table>
+            <mat-table [dataSource]="tickets" *ngIf="!loading && tickets.length > 0" class="mat-elevation-z8">
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let ticket">{{ ticket.id }}</mat-cell>
+              </ng-container>
+
+              <!-- Subject Column -->
+              <ng-container matColumnDef="subject">
+                <mat-header-cell *matHeaderCellDef>Subject</mat-header-cell>
+                <mat-cell *matCellDef="let ticket">{{ ticket.subject }}</mat-cell>
+              </ng-container>
+
+              <!-- Caller Name Column -->
+              <ng-container matColumnDef="caller">
+                <mat-header-cell *matHeaderCellDef>Caller Name</mat-header-cell>
+                <mat-cell *matCellDef="let ticket">{{ ticket.caller.first_name }} {{ ticket.caller.last_name }}</mat-cell>
+              </ng-container>
+
+              <!-- Agent Name Column -->
+              <ng-container matColumnDef="agent">
+                <mat-header-cell *matHeaderCellDef>Agent Name</mat-header-cell>
+                <mat-cell *matCellDef="let ticket">{{ ticket.agent?.name || '' }}</mat-cell>
+              </ng-container>
+
+              <!-- Action Column -->
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let ticket">
+                  <button mat-raised-button color="primary" [routerLink]="['/tickets', ticket.id, 'edit']">
+                    Edit
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Header and Row Definitions -->
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+
             <!-- Pagination controls -->
             <div class="d-flex justify-content-center mt-4" *ngIf="!loading && paginated?.last_page > 1">
               <nav>
