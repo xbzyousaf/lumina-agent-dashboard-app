@@ -1,3 +1,4 @@
+import { DashboradTicketFormComponent } from 'app/dashboard/dashborad-ticket-form/dashborad-ticket-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import { CallersComponent } from 'app/callers/callers.component';
 
 @NgModule({
   imports: [
@@ -25,11 +27,15 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    CallersComponent,
+    DashboardComponent,
+    DashboradTicketFormComponent,
   ],
   declarations: [
-    DashboardComponent,
+  
     UserProfileComponent,
     TableListComponent,
+    
   ]
 })
 

@@ -1,0 +1,37 @@
+<p>caller-info works!</p>
+<div class="container py-4">
+  <!-- Caller Details -->
+   <div *ngIf="caller" class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">{{ caller.first_name }} {{ caller.last_name }}</h4>
+    </div>
+    <div class="card-body">
+      <p><i class="bi bi-telephone"></i> <strong>Phone:</strong> {{ caller.phone || 'N/A' }}</p>
+      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ caller.email || 'N/A' }}</p>
+      <p><i class="bi bi-geo-alt"></i> <strong>Address:</strong> {{ caller.address || 'N/A' }}</p>
+    </div>
+  </div>
+
+  <!-- Call History -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Call History</h5>
+    </div>
+    <div class="card-body">
+      <div *ngIf="callHistory.length === 0">No call history available.</div>
+
+      <div *ngFor="let call of callHistory" class="border-bottom pb-3 mb-3">
+        <p><strong>Ticket:</strong> {{ call.ticket.subject }}
+          <span class="badge bg-info text-dark ms-2">{{ call.ticket.priority }}</span>
+        </p>
+        <p><strong>Agent:</strong> {{ call.agent.name }}</p>
+        <p><strong>Start:</strong> {{ call.call_start_time | date: 'medium' }}</p>
+        <p><strong>End:</strong> {{ call.call_end_time | date: 'medium' }}</p>
+        <p><strong>Notes:</strong> {{ call.notes }}</p>
+        <p><strong>Outcome:</strong>
+          <span class="badge bg-success text-white">{{ call.outcome }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
