@@ -2,9 +2,10 @@
 
 <div class="container py-4">
   <!-- Loading Spinner -->
-  <div *ngIf="isLoading" class="text-center my-4">
-    <p>Loading callers...</p>
-  </div>
+       <div *ngIf="isLoading" class="text-center my-5">
+          <div class="spinner-border text-danger" role="status"></div>
+          <p class="mt-2">Loading callers...</p>
+        </div>
 
   <!-- Callers Table -->
   <div *ngIf="!isLoading">
@@ -34,10 +35,9 @@
                 <td>{{ c.address }}</td>
               
                   <td>
-                    <!-- <button class="btn btn-sm btn-primary"  [routerLink]="['/callers', caller.id, 'details']">Edit</button></td> -->
-    
-
-                  <button class="btn btn-sm btn-info">View Caller Details</button>
+                    <a [routerLink]="['/callers', c.id, 'details']" class="btn btn-sm btn-primary">
+                      Caller Details</a>
+                  </td>
               </tr>
             </tbody>
           </table>

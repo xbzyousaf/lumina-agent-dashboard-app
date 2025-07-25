@@ -1,13 +1,14 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="row">
-      <!-- Show loading state -->
-      <div *ngIf="isLoading" class="text-center my-4 w-100">
-       <p>Loading ticket details for editing...</p>
-      </div>
+    <!-- Show loading state -->
+    <div *ngIf="isLoading" class="text-center my-5">
+          <div class="spinner-border text-danger" role="status"></div>
+          <p class="mt-2">Loading ticket details for editing...</p>
+        </div>
 
-      <!-- Main content (hidden while loading) -->
-      <ng-container *ngIf="!isLoading">
+    <!-- Main content -->
+    <ng-container *ngIf="!isLoading">  
+    <div class="row">
         <!-- Left Side: Edit Form -->
         <div class="col-md-8">
           <div class="card">
@@ -96,11 +97,11 @@
               <p class="card-description">
                 Assigned support agent for this ticket. You can view their details or contact them for follow-up.
               </p>
-              <a href="javascript:void(0)" class="btn btn-danger btn-round">Contact </a>
+              <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
             </div>
           </div>
         </div>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
   </div>
 </div>
