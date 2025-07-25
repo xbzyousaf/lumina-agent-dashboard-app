@@ -11,6 +11,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CallersComponent } from './callers/callers.component';
 import { CallerInfoComponent } from './callers/caller-info/caller-info.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   imports: [
@@ -23,7 +28,11 @@ import { CallerInfoComponent } from './callers/caller-info/caller-info.component
     AppRoutingModule,
     CallersComponent,
     DashboardComponent,
-    CallerInfoComponent
+    CallerInfoComponent,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule
 
     
     
