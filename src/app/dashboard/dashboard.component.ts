@@ -32,7 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 })
 export class DashboardComponent implements OnInit {
   tickets: Ticket[] = [];
-  displayedColumns: string[] = ['id', 'subject', 'caller', 'agent', 'action'];
+  displayedColumns: string[] = ['subject', 'caller', 'agent', 'action'];
 
   loading = false;
 

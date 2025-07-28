@@ -9,9 +9,11 @@
           <div class="card-body">
 
             <!-- Loading spinner -->
-            <div *ngIf="loading" class="text-center my-4">
-              <p>Loading tickets...</p>
-            </div>
+                 
+              <div *ngIf="loading" class="text-center my-5">
+                <div class="spinner-border text-danger" role="status"></div>
+                <p class="mt-2">Loading tickets...</p>
+              </div>
 
             <!-- No tickets message -->
             <div *ngIf="!loading && tickets.length === 0" class="text-center text-muted mt-3">
@@ -21,11 +23,6 @@
             <!-- Ticket Table -->
             <mat-table [dataSource]="tickets" *ngIf="!loading && tickets.length > 0" class="mat-elevation-z8">
 
-              <!-- ID Column -->
-              <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-                <mat-cell *matCellDef="let ticket">{{ ticket.id }}</mat-cell>
-              </ng-container>
 
               <!-- Subject Column -->
               <ng-container matColumnDef="subject">
