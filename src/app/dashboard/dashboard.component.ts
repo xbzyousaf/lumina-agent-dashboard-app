@@ -10,9 +10,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   standalone: true,
@@ -33,43 +32,42 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class DashboardComponent implements OnInit {
   tickets: Ticket[] = [];
-  dataSource = new MatTableDataSource<Ticket>([]);
   displayedColumns: string[] = ['id', 'subject', 'caller', 'agent', 'action'];
 
-  paginated = new PaginatedResponse<Ticket>();
   loading = false;
+
+  pageSize = 10;
+  totalItems = 0;
+  currentPage = 0;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.getActiveTickets();
+    this.getActiveTickets(this.currentPage, this.pageSize);
   }
 
-  getActiveTickets(page: number = 1): void {
+  getActiveTickets(page: number = 0, size: number = this.pageSize): void {
     this.loading = true;
-    this.apiService.get<Base<PaginatedResponse<Ticket>>>(`tickets?page=${page}`).subscribe({
+    const apiPage = page + 1; // Convert to 1-based index if needed
+
+    this.apiService.get<Base<PaginatedResponse<Ticket>>>(`tickets?page=${apiPage}&limit=${size}`).subscribe({
       next: (res) => {
         this.tickets = res.data.data;
-        this.dataSource.data = this.tickets; // Update mat-table data source
-        this.paginated.current_page = res.data.current_page;
-        this.paginated.last_page = res.data.last_page;
+        this.totalItems = res.data.total;
+        this.currentPage = res.data.current_page - 1;
         this.loading = false;
-        console.log('ticket:', this.tickets);
+        console.log('Tickets loaded:', this.tickets);
       },
       error: (err) => {
+        console.error('Error loading tickets:', err);
         this.loading = false;
-        console.error('Error loading tickets', err);
       }
     });
   }
 
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.paginated.last_page) {
-      this.getActiveTickets(page);
-    }
-  }
-
-  paginationArray(lastPage: number): number[] {
-    return Array.from({ length: lastPage }, (_, i) => i + 1);
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getActiveTickets(this.currentPage, this.pageSize);
   }
 }
