@@ -1,106 +1,80 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="row">
-      <!-- Show loading state -->
-      <div *ngIf="isLoading" class="text-center my-4 w-100">
-       <p>Loading ticket details for editing...</p>
-      </div>
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center flex-column text-center my-5">
+      <div class="spinner-border text-danger" role="status"></div>
+      <p class="mt-3">Loading ticket details for editing...</p>
+    </div>
 
-      <!-- Main content (hidden while loading) -->
-      <ng-container *ngIf="!isLoading">
-        <!-- Left Side: Edit Form -->
-        <div class="col-md-8">
-          <div class="card">
+    <!-- Main Content -->
+    <ng-container *ngIf="!isLoading">
+      <div class="row">
+      
+        <!-- Left Column: Edit Ticket Form -->
+        <div class="col-12 col-lg-12 mb-4">
+          <div class="card h-100">
             <div class="card-header card-header-danger">
               <h4 class="card-title">Edit Ticket</h4>
-              <p class="card-category">Update ticket details</p>
+              <small class="card-category">Update ticket details</small>
             </div>
+
+         
             <div class="card-body">
               <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                
+                <div class="mb-3">
+                  <label>Subject</label>
+                  <input type="text" class="form-control" formControlName="subject" disabled />
+                </div>
+
                 <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>Subject</label>
-                      <input type="text" class="form-control" formControlName="subject" disabled />
-                    </div>
+                  <div class="col-md-6 mb-3">
+                    <label>Caller</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="ticket?.caller?.first_name + ' ' + ticket?.caller?.last_name"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label>Agent</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="ticket?.agent?.name"
+                      disabled
+                    />
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Caller</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        [value]="ticket?.caller?.first_name + ' ' + ticket?.caller?.last_name"
-                        disabled
-                      />
-                    </div>
+                  <div class="col-md-6 mb-3">
+                    <label>Status</label>
+                    <select class="form-control" formControlName="status">
+                      <option *ngFor="let status of statuses" [value]="status.value">
+                        {{ status.label }}
+                      </option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Agent</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        [value]="ticket?.agent?.name"
-                        disabled
-                      />
-                    </div>
+                  <div class="col-md-6 mb-3">
+                    <label>Content</label>
+                    <textarea type="text" rows="4" class="form-control" formControlName="content" ></textarea>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Status</label>
-                      <select class="form-control" formControlName="status">
-                        <option *ngFor="let status of statuses" [value]="status.value">
-                          {{ status.label }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Content</label>
-                      <input type="text" class="form-control" formControlName="content" />
-                    </div>
-                  </div>
-                </div>
-
-                <button class="btn btn-success pull-right" type="submit" [disabled]="form.invalid">Update</button>
+                <button class="btn btn-success float-end" type="submit" [disabled]="form.invalid">
+                  Update
+                </button>
                 <div class="clearfix"></div>
               </form>
             </div>
           </div>
         </div>
 
-        <!-- Right Side: Agent Info Card -->
-        <div class="col-md-4">
-          <div class="card card-profile">
-            <div class="card-avatar">
-              <a href="javascript:void(0)">
-                <img class="img" src="./assets/img/faces/marc.jpg" />
-              </a>
-            </div>
-            <div class="card-body">
-              <h6 class="card-category text-gray">
-                {{ ticket?.agent?.designation || 'Support Agent' }}
-              </h6>
-              <h4 class="card-title">
-                {{ ticket?.agent?.name || 'N/A' }}
-              </h4>
-              <p class="card-description">
-                Assigned support agent for this ticket. You can view their details or contact them for follow-up.
-              </p>
-              <a href="javascript:void(0)" class="btn btn-danger btn-round">Contact </a>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
+    
   </div>
 </div>

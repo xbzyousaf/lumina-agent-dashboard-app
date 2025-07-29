@@ -1,37 +1,78 @@
-<p>caller-info works!</p>
-<div class="container py-4">
-  <!-- Caller Details -->
-   <div *ngIf="caller" class="card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">{{ caller.first_name }} {{ caller.last_name }}</h4>
-    </div>
-    <div class="card-body">
-      <p><i class="bi bi-telephone"></i> <strong>Phone:</strong> {{ caller.phone || 'N/A' }}</p>
-      <p><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ caller.email || 'N/A' }}</p>
-      <p><i class="bi bi-geo-alt"></i> <strong>Address:</strong> {{ caller.address || 'N/A' }}</p>
-    </div>
+ <div class="main-content">
+ <div class="container-fluid">
+
+  <!-- Show loading state -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center flex-column my-5 text-center">
+    <div class="spinner-border text-danger" role="status"></div>
+    <p class="mt-3">Loading caller details...</p>
   </div>
 
-  <!-- Call History -->
-  <div class="card shadow-sm">
-    <div class="card-header bg-secondary text-white">
-      <h5 class="mb-0">Call History</h5>
-    </div>
-    <div class="card-body">
-      <div *ngIf="callHistory.length === 0">No call history available.</div>
+  <!-- Main content when not loading -->
+  <div *ngIf="!isLoading" class="row">
+  
+    <!-- Left Column: Call History -->
+    <div class="col-12 col-lg-8 mb-4">
+      <div class="card h-100">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title mb-0">Call History</h4>
+          <small class="card-category">Previous interactions with this caller</small>
+        </div>
+        <div class="card-body">
 
-      <div *ngFor="let call of callHistory" class="border-bottom pb-3 mb-3">
-        <p><strong>Ticket:</strong> {{ call.ticket.subject }}
-          <span class="badge bg-info text-dark ms-2">{{ call.ticket.priority }}</span>
-        </p>
-        <p><strong>Agent:</strong> {{ call.agent.name }}</p>
-        <p><strong>Start:</strong> {{ call.call_start_time | date: 'medium' }}</p>
-        <p><strong>End:</strong> {{ call.call_end_time | date: 'medium' }}</p>
-        <p><strong>Notes:</strong> {{ call.notes }}</p>
-        <p><strong>Outcome:</strong>
-          <span class="badge bg-success text-white">{{ call.outcome }}</span>
-        </p>
+          <!-- No Call History -->
+          <div *ngIf="callHistory.length === 0" class="alert alert-info">
+            No call history available for this caller.
+          </div>
+
+          <!-- Call History Items -->
+          <div *ngFor="let call of callHistory" class="border-bottom pb-3 mb-3">
+            <div class="row">
+              <div class="col-md-8">
+                <h5>
+                  {{ call.ticket.subject }}
+                  <span class="badge bg-info text-dark ms-2">{{ call.ticket.priority }}</span>
+                </h5>
+                <p><strong>Agent:</strong> {{ call.agent.name }}</p>
+              </div>
+              <div class="col-md-4 text-md-end">
+                <small class="text-muted">
+                  {{ call.call_start_time | date: 'mediumDate' }}<br>
+                  {{ call.call_start_time | date: 'shortTime' }} - {{ call.call_end_time | date: 'shortTime' }}
+                </small>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <p><strong>Notes:</strong> {{ call.notes }}</p>
+              <p><strong>Outcome:</strong>
+                <span class="badge bg-success">{{ call.outcome }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Right Column: Caller Profile -->
+    <div class="col-12 col-lg-4">
+      <div *ngIf="caller" class="card card-profile h-100">
+        <div class="card-avatar mx-auto mt-3">
+          <a href="javascript:void(0)">
+            <img class="img-fluid rounded-circle" src="./assets/img/faces/marc.jpg" alt="Caller Image" />
+          </a>
+        </div>
+        <div class="card-body text-center">
+          <h6 class="card-category text-muted">Caller Profile</h6>
+          <h4 class="card-title">{{ caller.first_name }} {{ caller.last_name }}</h4>
+
+          <div class="card-description text-start">
+            <p><i class="material-icons align-middle">phone</i> {{ caller.phone || 'N/A' }}</p>
+            <p><i class="material-icons align-middle">email</i> {{ caller.email || 'N/A' }}</p>
+            <p><i class="material-icons align-middle">location_on</i> {{ caller.address || 'N/A' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
   </div>
 </div>

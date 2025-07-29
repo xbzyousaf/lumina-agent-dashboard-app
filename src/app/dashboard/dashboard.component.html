@@ -9,23 +9,18 @@
           <div class="card-body">
 
             <!-- Loading spinner -->
-            <div *ngIf="loading" class="text-center my-4">
-              <p>Loading tickets...</p>
+            <div *ngIf="isLoading" class="text-center my-5">
+              <div class="spinner-border text-danger" role="status"></div>
+              <p class="mt-2">Loading active tickets...</p>
             </div>
 
             <!-- No tickets message -->
-            <div *ngIf="!loading && tickets.length === 0" class="text-center text-muted mt-3">
+            <div *ngIf="!isLoading && tickets.length === 0" class="text-center text-muted mt-3">
               No active tickets found.
             </div>
 
             <!-- Ticket Table -->
-            <mat-table [dataSource]="tickets" *ngIf="!loading && tickets.length > 0" class="mat-elevation-z8">
-
-              <!-- ID Column -->
-              <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-                <mat-cell *matCellDef="let ticket">{{ ticket.id }}</mat-cell>
-              </ng-container>
+            <mat-table [dataSource]="tickets" *ngIf="!isLoading && tickets.length > 0" class="mat-elevation-z8">
 
               <!-- Subject Column -->
               <ng-container matColumnDef="subject">
@@ -67,7 +62,7 @@
               [pageIndex]="currentPage"        
               [pageSizeOptions]="[5, 10, 25, 50]"
               (page)="onPageChange($event)"
-              *ngIf="!loading && tickets.length > 0">
+              *ngIf="!isLoading && tickets.length > 0">
             </mat-paginator>
 
           </div>

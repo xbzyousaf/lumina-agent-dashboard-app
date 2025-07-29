@@ -32,9 +32,9 @@ import { MatSortModule } from '@angular/material/sort';
 })
 export class DashboardComponent implements OnInit {
   tickets: Ticket[] = [];
-  displayedColumns: string[] = ['id', 'subject', 'caller', 'agent', 'action'];
+  displayedColumns: string[] = ['subject', 'caller', 'agent', 'action'];
 
-  loading = false;
+  isLoading = false;
 
   pageSize = 10;
   totalItems = 0;
@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getActiveTickets(page: number = 0, size: number = this.pageSize): void {
-    this.loading = true;
+    this.isLoading = true;
     const apiPage = page + 1; // Convert to 1-based index if needed
 
     this.apiService.get<Base<PaginatedResponse<Ticket>>>(`tickets?page=${apiPage}&limit=${size}`).subscribe({
@@ -55,12 +55,12 @@ export class DashboardComponent implements OnInit {
         this.tickets = res.data.data;
         this.totalItems = res.data.total;
         this.currentPage = res.data.current_page - 1;
-        this.loading = false;
+        this.isLoading = false;
         console.log('Tickets loaded:', this.tickets);
       },
       error: (err) => {
-        console.error('Error loading tickets:', err);
-        this.loading = false;
+        console.error('Error isLoading tickets:', err);
+        this.isLoading = false;
       }
     });
   }
