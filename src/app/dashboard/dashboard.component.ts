@@ -56,10 +56,8 @@ export class DashboardComponent implements OnInit {
         this.totalItems = res.data.total;
         this.currentPage = res.data.current_page - 1;
         this.isLoading = false;
-        console.log('Tickets loaded:', this.tickets);
       },
       error: (err) => {
-        console.error('Error isLoading tickets:', err);
         this.isLoading = false;
       }
     });

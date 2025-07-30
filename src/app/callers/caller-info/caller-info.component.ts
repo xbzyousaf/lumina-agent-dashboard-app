@@ -37,7 +37,7 @@ export class CallerInfoComponent implements OnInit {
   this.apiService.get<Base<{ caller: Caller; call_history: CallHistoryItem[]}>>(`caller/${id}/callhistory`)
     .subscribe({
       next: (res) => {
-        console.log("res::", res);
+        console.log("res::", res.data.call_history);
         this.caller = res.data.caller;
         this.callHistory = res.data.call_history;
         this.isLoading = false;

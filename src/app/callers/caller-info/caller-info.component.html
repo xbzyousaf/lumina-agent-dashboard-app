@@ -32,7 +32,7 @@
                   {{ call.ticket.subject }}
                   <span class="badge bg-info text-dark ms-2">{{ call.ticket.priority }}</span>
                 </h5>
-                <p><strong>Agent:</strong> {{ call.agent.name }}</p>
+                <p><strong>Caller:</strong> {{ call.caller.first_name }} {{ call.caller.last_name }}</p>
               </div>
               <div class="col-md-4 text-md-end">
                 <small class="text-muted">
@@ -55,7 +55,7 @@
 
     <!-- Right Column: Caller Profile -->
     <div class="col-12 col-lg-4">
-      <div *ngIf="caller" class="card card-profile h-100">
+      <div *ngIf="caller" class="card card-profile">
         <div class="card-avatar mx-auto mt-3">
           <a href="javascript:void(0)">
             <img class="img-fluid rounded-circle" src="./assets/img/faces/marc.jpg" alt="Caller Image" />

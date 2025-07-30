@@ -41,7 +41,7 @@ export class DashboradTicketFormComponent implements OnInit {
     this.form = this.fb.group({
       subject: ['', Validators.required],
       status: ['', Validators.required],
-      content: ['', Validators.required],
+      description: ['', Validators.required],
     });
   }
 
@@ -60,16 +60,14 @@ export class DashboradTicketFormComponent implements OnInit {
       next: (res) => {
         this.ticket = res.data;
        
-         const noteWithContent = this.ticket.notes.find(n => n.content?.trim());
         this.form.patchValue({
           subject: this.ticket.subject,
           status: this.ticket.status,
-          content: noteWithContent?.content || ''
+          description: this.ticket?.description ?? ''
         });
         this.isLoading=false
       },
       error: (err) => {
-        console.error('Error loading ticket:', err);
         this.isLoading=false;
       }
     });
@@ -84,7 +82,6 @@ export class DashboradTicketFormComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Error updating ticket:', err);
       }
     });
   } 
